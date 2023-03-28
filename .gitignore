@@ -30,4 +30,20 @@ build/
 !**/src/test/**/build/
 
 ### VS Code ###
-.vscode/
+*.log
+**/.classpath
+**/.factorypath
+**/.settings/
+**/.vscode/
+**/target/
+**/.vscode/
+**/target/
+**/*.ref
+**/*.iml
+**/*.bak
+**/*.log
+**/*.exc
+**/.project
+**/.vscode/
+**/.env
+**/.idea

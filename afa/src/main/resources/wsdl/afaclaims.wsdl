@@ -1,0 +1,58 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://realtime.ws.iphswitch.medscheme.co.za/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:t="http://realtime.ws.iphswitch.medscheme.co.za/"
+    name="ProcessRealtimeClaimImplService" targetNamespace="http://realtime.ws.iphswitch.medscheme.co.za/">
+    <types>
+        <xs:schema>
+            <xs:import namespace="http://www.exampleURI.com/Schema1" schemaLocation="claim.xsd"/>
+        </xs:schema>
+        <xs:schema xmlns:tns="http://realtime.ws.iphswitch.medscheme.co.za/"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://realtime.ws.iphswitch.medscheme.co.za/" version="1.0">
+            <xs:element name="processClaim" type="tns:processClaim"/>
+            <xs:element name="processClaimResponse" type="tns:processClaimResponse"/>
+            
+            <xs:complexType name="processClaim">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="ClaimRequest" type="xs:anyType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="processClaimResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="ClaimRequest" type="xs:anyType"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </types>
+    <message name="ProcessRealtimeClaimImpl_processClaimResponse">
+        <part element="tns:processClaimResponse" name="processClaimResponse"/>
+    </message>
+    <message name="ProcessRealtimeClaimImpl_processClaim">
+        <part element="tns:processClaim" name="processClaim"/>
+    </message>
+    <portType name="ProcessRealtimeClaimImpl">
+        <operation name="processClaim" parameterOrder="processClaim">
+            <input message="tns:ProcessRealtimeClaimImpl_processClaim"/>
+            <output message="tns:ProcessRealtimeClaimImpl_processClaimResponse"/>
+        </operation>
+    </portType>
+    <binding name="ProcessRealtimeClaimImplBinding" type="tns:ProcessRealtimeClaimImpl">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="processClaim">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="ProcessRealtimeClaimImplService">
+        <port binding="tns:ProcessRealtimeClaimImplBinding" name="ProcessRealtimeClaimImplPort">
+            <soap:address location="http://172.27.45.11:8080/interpharmswitch/realTimeClaimWS"/>
+        </port>
+    </service>
+</definitions>
