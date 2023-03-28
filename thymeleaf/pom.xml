@@ -25,7 +25,12 @@
         </dependency>
         <dependency>
             <groupId>bw.co.roguesystems.edi.afa</groupId>
-            <artifactId>afa</artifactId>
+            <artifactId>rogueedi-afa</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>bw.co.roguesystems.edi.bomaid</groupId>
+            <artifactId>rogueedi-bomaid</artifactId>
             <version>0.0.1</version>
         </dependency>
         <dependency>

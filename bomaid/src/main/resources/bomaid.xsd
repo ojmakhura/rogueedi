@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="">
+  <xsd:element name="claimHeader">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="scheme" type="xsd:string" nillable="true"/>
+        <xsd:element name="tradePart" type="xsd:string" nillable="true"/>
+        <xsd:element name="batchNum" type="xsd:string" nillable="true"/>
+        <xsd:element name="createDate" type="xsd:date" nillable="true"/>
+        <xsd:element name="transType" type="xsd:string" nillable="true"/>
+        <xsd:element name="numTrans" type="xsd:int" nillable="true"/>
+        <xsd:element name="totClaim" type="xsd:decimal" nillable="true"/>
+        <xsd:element name="claims" minOccurs="1" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="scriptNum" type="xsd:string" nillable="true" minOccurs="0" />
+              <xsd:element name="extUniqueNum" type="xsd:string" nillable="true"/>
+              <xsd:element name="optPlan" type="xsd:string" nillable="true" minOccurs="0"/>
+              <xsd:element name="medAid" type="xsd:string" nillable="true"/>
+              <xsd:element name="dependant" type="xsd:int" nillable="true" minOccurs="0"/>
+              <xsd:sequence>
+                <xsd:element name="depIdNum" type="xsd:string" nillable="true" minOccurs="0"/>
+                <xsd:element name="depBirthDate" type="xsd:date" nillable="true" minOccurs="0"/>
+                <xsd:element name="depInitials" type="xsd:string" nillable="true" minOccurs="0"/>
+                <xsd:element name="depName" type="xsd:string" nillable="true" minOccurs="0"/>
+                <xsd:element name="depSurname" type="xsd:string" nillable="true" minOccurs="0"/>
+                <xsd:element name="depGender" type="xsd:string" nillable="true" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:element name="authNum" type="xsd:string" nillable="true" minOccurs="0"/>
+              <xsd:element name="d-m" type="xsd:string" nillable="true"/>
+              <xsd:element name="vendorRef" type="xsd:string" nillable="true" minOccurs="0"/>
+              <xsd:element name="pmbInd" type="xsd:string" nillable="true" minOccurs="0"/>
+              <xsd:element name="inHospInd" type="xsd:string" nillable="true" minOccurs="0"/>
+              <xsd:element name="startDate" type="xsd:date" nillable="true" minOccurs="0"/>
+              <xsd:element name="startTime" nillable="true" default="AM" minOccurs="0">
+                <xsd:simpleType>
+                  <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="AM" />
+                    <xsd:enumeration value="PM" />
+                  </xsd:restriction>
+                </xsd:simpleType>
+              </xsd:element>
+              <xsd:element name="endDate" type="xsd:date" nillable="true" minOccurs="0"/>
+              <xsd:element name="endTime" nillable="true" default="PM" minOccurs="0">
+                <xsd:simpleType>
+                  <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="AM" />
+                    <xsd:enumeration value="PM" />
+                  </xsd:restriction>
+                </xsd:simpleType>
+              </xsd:element>
+              <xsd:element name="providers" minOccurs="1" maxOccurs="unbounded">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="prov-type" type="xsd:string" nillable="true"/>
+                    <xsd:element name="bhf-number" type="xsd:int" nillable="true"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="claimDetail" minOccurs="1" maxOccurs="unbounded">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="medstarClaimRef" type="xsd:string" nillable="true" minOccurs="0"/>
+                    <xsd:element name="uniqueSeq" type="xsd:int" nillable="true"/>
+                    <xsd:element name="lineType" type="xsd:string" nillable="true"/>
+                    <xsd:element name="tariffCode" type="xsd:string" nillable="true"/>
+                    <xsd:element name="tariffDesc" type="xsd:string" nillable="true"/>
+                    <xsd:element name="benCode" type="xsd:string" nillable="true" minOccurs="0"/>
+                    <xsd:element name="serviceDate" type="xsd:date" nillable="true"/>
+                    <xsd:element name="units" type="xsd:decimal" nillable="true"/>
+                    <xsd:element name="claimed" type="xsd:decimal" nillable="true"/>
+                    <xsd:element name="benefit" type="xsd:decimal" nillable="true"/>
+                    <xsd:element name="note" type="xsd:string" nillable="true" minOccurs="0"/>
+                    <xsd:element name="rej-code" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="4"/>
+                    <xsd:element name="ext-reference" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="5"/>
+                    <xsd:element name="mouth-part-id" type="xsd:int" nillable="true" minOccurs="0" maxOccurs="10"/>
+                    <xsd:element name="reason" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="2"/>
+                    <xsd:element name="extref" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="10"/>
+                    <xsd:element name="modifiers" minOccurs="0" maxOccurs="unbounded">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="modCode" type="xsd:string" nillable="true"/>
+                          <xsd:element name="benefit" type="xsd:string" nillable="true"/>
+                          <xsd:element name="claimed" type="xsd:string" nillable="true"/>
+                          <xsd:element name="extra" type="xsd:string" nillable="true"/>
+                        </xsd:sequence>
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="diagnosis" minOccurs="1" maxOccurs="unbounded">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="primSec" type="xsd:string" nillable="true"/>
+                          <xsd:element name="diagType" type="xsd:string" nillable="true"/>
+                          <xsd:element name="diagCode" type="xsd:string" nillable="true"/>
+                        </xsd:sequence>
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="medicine" minOccurs="0" maxOccurs="unbounded">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="medSeq" type="xsd:int" nillable="true"/>
+                          <xsd:element name="nappi-code" type="xsd:string" nillable="true"/>
+                          <xsd:element name="nappiDesc" type="xsd:string" nillable="true"/>
+                          <xsd:element name="quantity" type="xsd:decimal" nillable="true"/>
+                          <xsd:element name="claimed" type="xsd:decimal" nillable="true"/>
+                          <xsd:element name="benefit" type="xsd:decimal" nillable="true"/>
+                          <xsd:element name="note" type="xsd:string" nillable="true" minOccurs="0"/>
+                        </xsd:sequence>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

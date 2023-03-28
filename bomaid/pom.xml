@@ -7,20 +7,15 @@
         <artifactId>rogueedi</artifactId>
         <version>0.0.1</version>
     </parent>
-	<groupId>bw.co.roguesystems.edi</groupId>
-	<artifactId>rogueedi-afa</artifactId>
-	<version>0.0.1</version>
-	<name>rogueedi-afa</name>
-	<description>AFA interface for the EDI</description>
+	<groupId>bw.co.roguesystems.bomaid</groupId>
+	<artifactId>rogueedi-bomaid</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>rogueedi-bomaid</name>
+	<description>BOMAID interface for EDI</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
-		<dependency>
-            <groupId>bw.co.roguesystems.edi</groupId>
-            <artifactId>rogueedi-common</artifactId>
-            <version>0.0.1</version>
-        </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web-services</artifactId>
@@ -46,21 +41,22 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
-				<groupId>com.evolvedbinary.maven.jvnet</groupId>
-				<artifactId>jaxb30-maven-plugin</artifactId>
-				<version>0.15.0</version>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxb2-maven-plugin</artifactId>
+				<version>3.1.0</version>
 				<executions>
 					<execution>
+						<id>xjc</id>
 						<goals>
-							<goal>generate</goal> 
+							<goal>xjc</goal>
 						</goals>
 					</execution>
 				</executions>
 				<configuration>
-					<schemaLanguage>WSDL</schemaLanguage>
-					<schemaDirectory>${project.basedir}/src/main/resources/wsdl</schemaDirectory>
-					<generatePackage>bw.co.example.soapconsumer.wsdl</generatePackage>
-					<schemaFiles>afaclaims.xsd</schemaFiles>
+					<packageName>bw.co.roguesystems.edi.bomaid</packageName>
+					<sources>
+						<source>${project.basedir}/src/main/resources/bomaid.xsd</source>
+					</sources>
 				</configuration>
 			</plugin>
 		</plugins>

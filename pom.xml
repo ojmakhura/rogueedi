@@ -373,6 +373,7 @@
         <module>core</module>
         <module>webservice</module>
 		<module>afa</module>
+		<module>bomaid</module>
 		<module>thymeleaf</module>
     </modules>
     <properties>
