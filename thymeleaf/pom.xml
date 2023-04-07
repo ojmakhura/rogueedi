@@ -12,6 +12,17 @@
     <version>0.0.1</version>
     <packaging>jar</packaging>
     <name>Rogue Systems EDI Thymeleaf Web</name>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.keycloak.bom</groupId>
+                <artifactId>keycloak-adapter-bom</artifactId>
+                <version>21.0.2</version>
+                <type>pom</type>
+                <scope>import</scope> 
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <dependencies>
         <dependency>
             <groupId>bw.co.roguesystems.edi</groupId>
@@ -24,12 +35,12 @@
             <version>0.0.1</version>
         </dependency>
         <dependency>
-            <groupId>bw.co.roguesystems.edi.afa</groupId>
-            <artifactId>rogueedi-afa</artifactId>
+            <groupId>bw.co.roguesystems.edi</groupId>
+            <artifactId>rogueedi-medscheme</artifactId>
             <version>0.0.1</version>
         </dependency>
         <dependency>
-            <groupId>bw.co.roguesystems.edi.bomaid</groupId>
+            <groupId>bw.co.roguesystems.edi</groupId>
             <artifactId>rogueedi-bomaid</artifactId>
             <version>0.0.1</version>
         </dependency>
@@ -57,8 +68,29 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-client</artifactId>
+		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-admin-client</artifactId>
+            <version>21.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-spring-security-adapter</artifactId>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

@@ -6,7 +6,8 @@
  */
 package bw.co.roguesystems.edi.system;
 
-import bw.co.roguesystems.edi.site.SiteEntityRepository;
+import bw.co.roguesystems.edi.client.EdiClientEntityRepository;
+import bw.co.roguesystems.edi.system.component.SystemComponentEntityRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -18,12 +19,14 @@ public class EdiSystemEntityDaoImpl
 {
     
     public EdiSystemEntityDaoImpl(
-        SiteEntityRepository siteEntityRepository,
+        EdiClientEntityRepository ediClientEntityRepository,
+        SystemComponentEntityRepository systemComponentEntityRepository,
         EdiSystemEntityRepository ediSystemEntityRepository
     ) {
 
         super(
-            siteEntityRepository,
+            ediClientEntityRepository,
+            systemComponentEntityRepository,
             ediSystemEntityRepository
         );
     }

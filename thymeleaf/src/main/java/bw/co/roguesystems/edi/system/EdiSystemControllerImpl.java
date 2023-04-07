@@ -22,7 +22,8 @@ public class EdiSystemControllerImpl
 
     public EdiSystemControllerImpl(EdiSystemService ediSystemService) {
         
-        super(ediSystemService);
+        super(
+            ediSystemService        );
     }
 
     /**
@@ -40,14 +41,10 @@ public class EdiSystemControllerImpl
         ediSystem.setName(null);
         ediSystem.setUrl(null);
         ediSystem.setDescription(null);
-        ediSystem.setId(3355l); 
+        ediSystem.setId(3355l);
+        ediSystem.setEdiClient(null);
+        ediSystem.setSystemComponents(null);
         form.setEdiSystem(ediSystem);
-        
-        EditEDISystemForm editEDISystemForm = getEditEDISystemForm();
-        editEDISystemForm.setEdiSystem(ediSystem);
-        model.addAttribute("editEDISystemForm", editEDISystemForm);
-
-        System.out.println(1);
     }
 
     /**
@@ -66,9 +63,9 @@ public class EdiSystemControllerImpl
         ediSystem.setUrl(null);
         ediSystem.setDescription(null);
         ediSystem.setId(3355l);
+        ediSystem.setEdiClient(null);
+        ediSystem.setSystemComponents(null);
         form.setEdiSystem(ediSystem);
-        
-        System.out.println(2);
     }
 
     /**
@@ -87,9 +84,9 @@ public class EdiSystemControllerImpl
         ediSystem.setUrl(null);
         ediSystem.setDescription(null);
         ediSystem.setId(3355l);
+        ediSystem.setEdiClient(null);
+        ediSystem.setSystemComponents(null);
         form.setEdiSystem(ediSystem);
-        
-        System.out.println(3);
     }
 
     /**
@@ -98,9 +95,6 @@ public class EdiSystemControllerImpl
     @Override
     public void doInitialiseSearchScreen(Model model)
     {
-        SearchEDISystemsForm searchEDISystemsForm = getSearchEDISystemsForm();
-        model.addAttribute("searchEDISystemsForm", searchEDISystemsForm);
-        
     }
 
     /**
@@ -109,9 +103,6 @@ public class EdiSystemControllerImpl
     @Override
     public void doSearch(DoSearchForm form, Model model)
     {
-        SearchEDISystemsForm searchEDISystemsForm = getSearchEDISystemsForm();
-        model.addAttribute("searchEDISystemsForm", searchEDISystemsForm);
-        System.out.println(5);
     }
 
     /**
@@ -120,8 +111,6 @@ public class EdiSystemControllerImpl
     @Override
     public void doEditGroup(DoEditGroupForm form, Model model)
     {
-        // SearchEDISystemsForm searchEDISystemsForm = getSearchEDISystemsForm();
-        // model.addAttribute("searchEDISystemsForm", searchEDISystemsForm);
     }
 
     /**
@@ -131,10 +120,10 @@ public class EdiSystemControllerImpl
     private static final EdiSystem[] ediSystems =
         new EdiSystem[]
         {
-            new EdiSystem("createdBy-1", "updatedBy-1", LocalDateTime.now(), LocalDateTime.now(), "name-1", "url-1", "description-1", null),
-            new EdiSystem("createdBy-2", "updatedBy-2", LocalDateTime.now(), LocalDateTime.now(), "name-2", "url-2", "description-2", null),
-            new EdiSystem("createdBy-3", "updatedBy-3", LocalDateTime.now(), LocalDateTime.now(), "name-3", "url-3", "description-3", null),
-            new EdiSystem("createdBy-4", "updatedBy-4", LocalDateTime.now(), LocalDateTime.now(), "name-4", "url-4", "description-4", null),
-            new EdiSystem("createdBy-5", "updatedBy-5", LocalDateTime.now(), LocalDateTime.now(), "name-5", "url-5", "description-5", null)
+            new EdiSystem("createdBy-1", "updatedBy-1", LocalDateTime.now(), LocalDateTime.now(), "name-1", "url-1", "description-1", null, null, null),
+            new EdiSystem("createdBy-2", "updatedBy-2", LocalDateTime.now(), LocalDateTime.now(), "name-2", "url-2", "description-2", null, null, null),
+            new EdiSystem("createdBy-3", "updatedBy-3", LocalDateTime.now(), LocalDateTime.now(), "name-3", "url-3", "description-3", null, null, null),
+            new EdiSystem("createdBy-4", "updatedBy-4", LocalDateTime.now(), LocalDateTime.now(), "name-4", "url-4", "description-4", null, null, null),
+            new EdiSystem("createdBy-5", "updatedBy-5", LocalDateTime.now(), LocalDateTime.now(), "name-5", "url-5", "description-5", null, null, null)
         };
 }

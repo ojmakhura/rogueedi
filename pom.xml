@@ -372,7 +372,7 @@
         <module>common</module>
         <module>core</module>
         <module>webservice</module>
-		<module>afa</module>
+		<module>medscheme</module>
 		<module>bomaid</module>
 		<module>thymeleaf</module>
     </modules>

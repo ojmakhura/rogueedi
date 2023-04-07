@@ -42,6 +42,7 @@ build/
 **/*.iml
 **/*.bak
 **/*.log
+**/*.log*
 **/*.exc
 **/.project
 **/.vscode/
