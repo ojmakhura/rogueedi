@@ -98,7 +98,9 @@ public class EdiClientServiceImpl
         Specification<EdiClientEntity> spec = null;
         if(StringUtils.isNotBlank(criteria)) {
             spec = RogueediSpecifications.<EdiClientEntity>findByAttributeContainingIgnoreCase("name", criteria)
-                    .or(RogueediSpecifications.<EdiClientEntity>findByAttributeContainingIgnoreCase("name", criteria));
+                    .or(RogueediSpecifications.<EdiClientEntity>findByAttributeContainingIgnoreCase("description", criteria))
+                    .or(RogueediSpecifications.<EdiClientEntity>findByAttributeContainingIgnoreCase("alias", criteria))
+                    .or(RogueediSpecifications.<EdiClientEntity>findByAttributeContainingIgnoreCase("tradingAs", criteria));
         }
 
         return ediClientEntityDao.toEdiClientCollection(ediClientEntityRepository.findAll(spec, Sort.by("name").ascending()));

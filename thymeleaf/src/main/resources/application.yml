@@ -16,7 +16,16 @@ spring:
         name: Rogue EDI
     security:
         oauth2:
+            client:
+                registration:
+                    keycloak:
+                        client-id: rogueedi-web
+                        authorization-grant-type: authorization_code
+                        scope: openid
+                provider:
+                    keycloak:
+                        issuer-uri: https://keycloak.roguedev.local/realms/rogueedi
+                        user-name-attribute: preferred_username
             resourceserver:
                 jwt:
                     issuer-uri: https://keycloak.roguedev.local/realms/rogueedi
-                    jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
