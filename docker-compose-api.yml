@@ -1,0 +1,82 @@
+version: "3.9"
+services:
+  ###############################################################################
+  # The main API 
+  ###############################################################################
+  api:
+    image: "ojmakhura/${API_IMAGE_NAME}:${IMAGE_VERSION}"
+    container_name: bocra-api
+    hostname: api
+    # healthcheck:
+    #   test: "curl -m 5 --silent --fail --request GET http://localhost:8085/actuator/health | grep UP || exit 1"
+    #   interval: 5s
+    #   timeout: 10s
+    #   retries: 3
+    #   start_period: 5s
+    volumes:
+      - ${BOCRA_DATA}/hosts:/etc/hosts
+      # - ${BOCRA_DATA}/api/app:/app
+    build:
+      context: .
+      dockerfile: webservice/Dockerfile
+      args:
+        CERT: ${CERT}
+        CERT_PASSWORD: ${CERT_PASSWORD}
+    networks:
+      rogueedi-public:
+    environment:
+      POSTGRES_SERVER: ${DB_DOMAIN}
+      DB_DOMAIN: ${DB_DOMAIN}
+      SERVER_PORT: ${API_SERVER_PORT}
+      POSTGRES_SERVER_PORT: ${POSTGRES_SERVER_PORT}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      KEYCLOAK_AUTH_URL: ${KEYCLOAK_AUTH_URL}
+      KEYCLOAK_REALM: ${KEYCLOAK_REALM}
+      KEYCLOAK_API_CLIENT: ${KEYCLOAK_API_CLIENT}
+      KEYCLOAK_API_CLIENT_SECRET: ${KEYCLOAK_API_CLIENT_SECRET}
+      BOCRA_KEYCLOAK_ADDRESS: ${BOCRA_KEYCLOAK_ADDRESS}
+      CERT: ${CERT}
+      CERT_PASSWORD: ${CERT_PASSWORD}
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+      RABBITMQ_HOST: ${RABBITMQ_HOST}
+      RABBITMQ_SERVICE_PORT: ${RABBITMQ_SERVICE_PORT}
+      BOCRA_COMPLAINT_ROLES: ${BOCRA_COMPLAINT_ROLES}
+      BOCRA_COMPLAINT_EMAILS: ${BOCRA_COMPLAINT_EMAILS}
+      COMPLAINTS_COMPLAINANT_KEY: ${COMPLAINTS_COMPLAINANT_KEY}
+      COMPLAINTS_BOCRA_KEY: ${COMPLAINTS_BOCRA_KEY}
+      COMPLAINTS_REPLY_KEY: ${COMPLAINTS_REPLY_KEY}
+      ACTIVATION_SUBMISSION_KEY: ${ACTIVATION_SUBMISSION_KEY}
+      FORM_SUBMISSION_RETURN_KEY: ${FORM_SUBMISSION_RETURN_KEY}
+      COMPLAINTS_USER_ASSIGNMENT_KEY: ${COMPLAINTS_USER_ASSIGNMENT_KEY}
+      API_URL: ${API_URL}
+      API_LOG_LEVEL: DEBUG
+      WEB_URL: ${WEB_URL}
+      COMM_URL: ${COMM_URL}
+      TZ: Africa/Gaborone
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          # Make the traefik service run only on the node with this label
+          # as the node with it has the volume for the certificates
+          - node.labels.rogueedi_api == true
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.rogueedi-api-web.rule=Host(`${API_DOMAIN}`)"
+        - "traefik.http.routers.rogueedi-api-web.entrypoints=web"
+        - "traefik.http.routers.rogueedi-api-web.middlewares=https-redirect"
+        - "traefik.http.routers.rogueedi-api-websecure.entrypoints=websecure"
+        - "traefik.http.routers.rogueedi-api-websecure.rule=Host(`${API_DOMAIN}`)"
+        - "traefik.http.routers.rogueedi-api-websecure.tls=${SSL_SECURE}"
+        - "traefik.http.routers.rogueedi-api-websecure.tls.certresolver=le"
+        - "traefik.http.services.rogueedi-api.loadbalancer.server.port=8085"
+###############################################################################
+# Networks
+###############################################################################
+networks:
+  rogueedi-public:
+    external: true

@@ -1,0 +1,54 @@
+version: "3.9"
+services:
+  ###############################################################################
+  # Angular web application
+  ###############################################################################
+  web:
+    image: "ojmakhura/${WEB_IMAGE_NAME}:${IMAGE_VERSION}"
+    hostname: web
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    build:
+      context: .
+      dockerfile: thymeleaf/Dockerfile
+    container_name: rogueedi-web
+    volumes:
+      - ${EDI_DATA}/hosts:/etc/hosts
+    # depends_on:
+    #   db:
+    #     condition: service_healthy
+    #   keycloak:
+    #     condition: service_healthy
+    #   api:
+    #     condition: service_healthy
+    networks:
+      rogueedi-public:
+    environment:
+      TZ: Africa/Gaborone
+    deploy:
+      placement:
+        constraints:
+          # Make the traefik service run only on the node with this label
+          # as the node with it has the volume for the certificates
+          - node.labels.rogueedi_web == true
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.rogueedi-web-http.rule=Host(`${WEB_DOMAIN}`)"
+        - "traefik.http.routers.rogueedi-web-http.entrypoints=web"
+        - "traefik.http.routers.rogueedi-web-http.middlewares=https-redirect"
+        - "traefik.http.routers.rogueedi-web-https.rule=Host(`${WEB_DOMAIN}`)"
+        - "traefik.http.routers.rogueedi-web-https.entrypoints=websecure"
+        - "traefik.http.routers.rogueedi-web-https.tls=${SSL_SECURE}"
+        # - "traefik.http.routers.rogueedi-web.tls.certresolver=le"
+        - "traefik.http.services.rogueedi-web.loadbalancer.server.port=80"
+
+###############################################################################
+# Networks
+###############################################################################
+networks:
+  rogueedi-public:
+    external: true
