@@ -58,8 +58,8 @@
 				</executions>
 				<configuration>
 					<schemaLanguage>WSDL</schemaLanguage>
-					<schemaDirectory>${project.basedir}/src/main/resources/medscheme</schemaDirectory>
-					<generatePackage>bw.co.example.soapconsumer.medscheme</generatePackage>
+					<schemaDirectory>${project.basedir}/src/main/resources/wsdl</schemaDirectory>
+					<generatePackage>bw.co.roguesystems.edi.medscheme</generatePackage>
 					<schemaFiles>medschemeclaims.xsd</schemaFiles>
 				</configuration>
 			</plugin>

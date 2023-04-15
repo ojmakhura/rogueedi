@@ -17,6 +17,16 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>rogueedi-bomaid</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>rogueedi-medscheme</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.andromda</groupId>
             <artifactId>andromda-core</artifactId>
             <scope>provided</scope>
