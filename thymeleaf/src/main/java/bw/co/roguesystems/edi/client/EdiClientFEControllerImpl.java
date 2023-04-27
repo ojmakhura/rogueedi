@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -134,7 +135,10 @@ public class EdiClientFEControllerImpl
      */
     @Override
     public void doSearch(DoSearchForm form, Model model) {
-        Collection<EdiClient> clients = ediClientService.search(form.getCriteria());
+        Collection<EdiClient> clients = 
+            StringUtils.isNotEmpty(form.getCriteria()) ?
+            ediClientService.search(form.getCriteria()) :
+            ediClientService.getAll();
         SearchClientsSearchFormImpl fm = (SearchClientsSearchFormImpl)form;
         fm.setEdiClients(clients);
     }

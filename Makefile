@@ -174,7 +174,7 @@ run_cron_local: gen_env
 ifdef cron_secret
 	. ./.env && export KEYCLOAK_CRON_CLIENT_SECRET=${cron_secret} && cd cron && mvn spring-boot:run
 else
-	@echo 'No cron_secret defined. Please run again with `make cron_secret=<secret> env=<LOCAL_ENV, DEV_ENV, TEST_ENV, LIVE_ENV> target`'
+	@echo 'No cron_secret defined. Please run again with `make cron_secret=<secret> env=<ENV, DEV_ENV, TEST_ENV, LIVE_ENV> target`'
 	exit 1
 endif
 
@@ -192,16 +192,11 @@ rm_env:
 	rm -f .env
 
 gen_env:
-ifdef env
 	if [ -f .env ]; then \
 		rm -f .env; \
 	fi
-	@$(${env}_ENV)
+	@$(ENV)
 	chmod 755 .env
-else
-	@echo 'no env defined. Please run again with `make env=<LOCAL_ENV, DEV_ENV, TEST_ENV, LIVE_ENV> target`'
-	exit 1
-endif
 
 ##
 ## System initialisation
@@ -217,9 +212,9 @@ swarm_init:
 local_prep: gen_env
 	. ./.env && mkdir ${EDI_DATA} && \
 	echo "127.0.0.1	localhost" && \
-    	echo "$(ip route get 8.8.8.8 | awk -F"src " 'NR==1{split($2,a," ");print a[1]}') ${LOCAL_DOMAIN} ${DB_DOMAIN} ${REGISTRY_DOMAIN} ${RABBITMQ_HOST} ${KEYCLOAK_DOMAIN} ${API_DOMAIN}" >> ${EDI_DATA}/hosts && \
-    	echo "$(ip route get 8.8.8.8 | awk -F"src " 'NR==1{split($2,a," ");print a[1]}') portainer.${LOCAL_DOMAIN} grafana.${LOCAL_DOMAIN} swarmprom.${LOCAL_DOMAIN}" >> ${EDI_DATA}/hosts && \
-    	echo "$(ip route get 8.8.8.8 | awk -F"src " 'NR==1{split($2,a," ");print a[1]}') unsee.${LOCAL_DOMAIN} alertmanager.${LOCAL_DOMAIN}" >> ${EDI_DATA}/hosts && \
+    	echo "$(ip route get 8.8.8.8 | awk -F"src " 'NR==1{split($2,a," ");print a[1]}') ${DOMAIN} ${DB_DOMAIN} ${REGISTRY_DOMAIN} ${RABBITMQ_HOST} ${KEYCLOAK_DOMAIN} ${API_DOMAIN}" >> ${EDI_DATA}/hosts && \
+    	echo "$(ip route get 8.8.8.8 | awk -F"src " 'NR==1{split($2,a," ");print a[1]}') portainer.${DOMAIN} grafana.${DOMAIN} swarmprom.${DOMAIN}" >> ${EDI_DATA}/hosts && \
+    	echo "$(ip route get 8.8.8.8 | awk -F"src " 'NR==1{split($2,a," ");print a[1]}') unsee.${DOMAIN} alertmanager.${DOMAIN}" >> ${EDI_DATA}/hosts && \
 	mkdir ${EDI_DATA}/db && \
 	mkdir ${EDI_DATA}/auth && \
 	cp traefik_passwd ${EDI_DATA}/auth/system_passwd && \

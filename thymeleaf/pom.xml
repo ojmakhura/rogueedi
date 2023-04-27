@@ -12,17 +12,6 @@
     <version>0.0.1</version>
     <packaging>jar</packaging>
     <name>Rogue Systems EDI Thymeleaf Web</name>
-    <!-- <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.keycloak.bom</groupId>
-                <artifactId>keycloak-adapter-bom</artifactId>
-                <version>21.0.2</version>
-                <type>pom</type>
-                <scope>import</scope> 
-            </dependency>
-        </dependencies>
-    </dependencyManagement> -->
     <dependencies>
         <dependency>
             <groupId>bw.co.roguesystems.edi</groupId>

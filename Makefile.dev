@@ -1,7 +1,7 @@
 
 include ./Makefile.constants
 
-COMMON_LOCAL_VARS = "export EMAIL=${TEST_EMAIL}"\
+COMMON_VARS = "export EMAIL=${TEST_EMAIL}"\
     "export STACK_NAME=${STACK_NAME}"\
     "export POSTGRES_USER=${POSTGRES_USER}"\
     "export POSTGRES_PASSWORD=${POSTGRES_PASSWORD}"\
@@ -32,153 +32,35 @@ COMMON_LOCAL_VARS = "export EMAIL=${TEST_EMAIL}"\
     "export CRON_IMAGE_NAME=${CRON_IMAGE_NAME}"\
     "export CRON_DB=${CRON_DB}"\
     
-LOCAL_ENV = printf "%s\n" \
+ENV = printf "%s\n" \
 	"\#!/bin/sh"\
-    ${COMMON_LOCAL_VARS}\
+    ${COMMON_VARS}\
     "export EDI_DATA=${HOME}${EDI_DATA}"\
     "export IMAGE_VERSION=${IMAGE_VERSION}"\
-    "export DOMAIN=${LOCAL_DOMAIN}"\
-    "export DB_DOMAIN=${EDI_DB_SUBDOMAIN}.${LOCAL_DOMAIN}"\
-    "export API_DOMAIN=${EDI_API_SUBDOMAIN}.${LOCAL_DOMAIN}"\
-    "export WEB_DOMAIN=${EDI_WEB_SUBDOMAIN}.${LOCAL_DOMAIN}"\
-    "export KEYCLOAK_DOMAIN=${EDI_KEYCLOAK_SUBDOMAIN}.${LOCAL_DOMAIN}"\
-    "export REGISTRY_DOMAIN=${EDI_REGISTRY_SUBDOMAIN}.${LOCAL_DOMAIN}"\
-    "export RABBITMQ_DOMAIN=${EDI_RABBITMQ_SUBDOMAIN}.${LOCAL_DOMAIN}"\
-    "export REDIRECT_URI=${LOCAL_REDIRECT_URI}"\
-    "export SMTP_HOST=${LOCAL_SMTP_HOST}"\
+    "export DOMAIN=${DOMAIN}"\
+    "export DB_DOMAIN=${EDI_DB_SUBDOMAIN}.${DOMAIN}"\
+    "export API_DOMAIN=${EDI_API_SUBDOMAIN}.${DOMAIN}"\
+    "export WEB_DOMAIN=${EDI_WEB_SUBDOMAIN}.${DOMAIN}"\
+    "export KEYCLOAK_DOMAIN=${EDI_KEYCLOAK_SUBDOMAIN}.${DOMAIN}"\
+    "export REGISTRY_DOMAIN=${EDI_REGISTRY_SUBDOMAIN}.${DOMAIN}"\
+    "export RABBITMQ_DOMAIN=${EDI_RABBITMQ_SUBDOMAIN}.${DOMAIN}"\
+    "export REDIRECT_URI=${REDIRECT_URI}"\
+    "export SMTP_HOST=${SMTP_HOST}"\
     "export EDI_KEYCLOAK_ADDRESS=${EDI_KEYCLOAK_ADDRESS}"\
-    "export KEYCLOAK_AUTH_URL=${KEYCLOAK_LOCAL_BASE_URL}"\
-    "export ACME_EMAIL=${LOCAL_ACME_EMAIL}"\
-    "export WEB_URL=${LOCAL_WEB_URL}"\
-    "export API_URL=${LOCAL_API_URL}"\
-    "export COMM_URL=${LOCAL_COMM_URL}"\
-    "export CRON_URL=${LOCAL_CRON_URL}"\
-    "export CERT=${LOCAL_CERT}"\
-    "export CERT_PASSWORD=${LOCAL_CERT_PASSWORD}"\
+    "export KEYCLOAK_AUTH_URL=${KEYCLOAK_BASE_URL}"\
+    "export ACME_EMAIL=${ACME_EMAIL}"\
+    "export WEB_URL=${WEB_URL}"\
+    "export API_URL=${API_URL}"\
+    "export COMM_URL=${COMM_URL}"\
+    "export CRON_URL=${CRON_URL}"\
+    "export CERT=${CERT}"\
+    "export CERT_PASSWORD=${CERT_PASSWORD}"\
     "export SSL_SECURE=true"\
     "export IMAGE_VERSION_SUFFIX=-lc"\
     "export API_LOG_LEVEL=INFO"\
     "export COMM_LOG_LEVEL=INFO"\
     "export CRON_LOG_LEVEL=INFO"\
-    "export REGISTRY_TAG=${EDI_REGISTRY_SUBDOMAIN}.${LOCAL_DOMAIN}"\
-    "export KEYCLOAK_REGISTRY_IMAGE=${KEYCLOAK_LOCAL_REGISTRY_IMAGE}"\
-    "export POSTGRES_SERVER=${LOCAL_DB_URL}"\
-    >> .env
-
-DEV_ENV = printf "%s\n" \
-	"\#!/bin/sh"\
-    ${COMMON_LOCAL_VARS}\
-    "export EDI_DATA=${EDI_DATA}"\
-    "export IMAGE_VERSION=${IMAGE_VERSION}"\
-    "export DOMAIN=${DEV_DOMAIN}"\
-    "export DB_DOMAIN=${BOCRA_DB_SUBDOMAIN}.${DEV_DOMAIN}"\
-    "export API_DOMAIN=${BOCRA_API_SUBDOMAIN}.${DEV_DOMAIN}"\
-    "export COMM_DOMAIN=${BOCRA_COMM_SUBDOMAIN}.${DEV_DOMAIN}"\
-    "export CRON_DOMAIN=${BOCRA_CRON_SUBDOMAIN}.${DEV_DOMAIN}"\
-    "export WEB_DOMAIN=${DEV_DOMAIN}"\
-    "export KEYCLOAK_DOMAIN=${BOCRA_KEYCLOAK_SUBDOMAIN}.${DEV_DOMAIN}"\
-    "export RABBITMQ_DOMAIN=${BOCRA_RABBITMQ_SUBDOMAIN}.${DEV_DOMAIN}"\
-    "export REDIRECT_URI=https://${DEV_DOMAIN}"\
-    "export SMTP_HOST=${DEV_SMTP_HOST}"\
-    "export BOCRA_KEYCLOAK_ADDRESS=${BOCRA_KEYCLOAK_ADDRESS}"\
-    "export KEYCLOAK_AUTH_URL=${KEYCLOAK_DEV_BASE_URL}"\
-    "export ACME_EMAIL=${DEV_ACME_EMAIL}"\
-    "export WEB_DEV_SERVER_PORT=${WEB_DEV_SERVER_PORT}"\
-    "export WEB_URL=${DEV_WEB_URL}"\
-    "export WEB_PUBLIC_PORT=${WEB_DEV_SERVER_PORT}"\
-    "export DEV_SERVER_ADDRESS=${DEV_SERVER_ADDRESS}"\
-    "export API_URL=${DEV_API_URL}"\
-    "export COMM_URL=${DEV_COMM_URL}"\
-    "export CRON_URL=${DEV_CRON_URL}"\
-    "export SSL_SECURE=true"\
-    "export CERT=STAR_csdev_roguesystems_co_bw"\
-    "export CERT_PASSWORD=changeit"\
-    "export API_LOG_LEVEL=DEBUG"\
-    "export COMM_LOG_LEVEL=DEBUG"\
-    "export CRON_LOG_LEVEL=DEBUG"\
-    "export IMAGE_VERSION_SUFFIX=-dev"\
-    "export REGISTRY_TAG=${BOCRA_REGISTRY_SUBDOMAIN}.${DEV_DOMAIN}"\
-    "export KEYCLOAK_REGISTRY_IMAGE=${KEYCLOAK_DEV_REGISTRY_IMAGE}"\
-    "export POSTGRES_SERVER=${DEV_DB_URL}"\
-    >> .env
-
-TEST_ENV = printf "%s\n" \
-	"\#!/bin/sh"\
-    ${COMMON_LOCAL_VARS}\
-    "export EDI_DATA=${EDI_DATA}"\
-    "export IMAGE_VERSION=${IMAGE_VERSION}"\
-    "export DOMAIN=${TEST_DOMAIN}"\
-    "export DB_DOMAIN=opqa-${BOCRA_DB_SUBDOMAIN}.${TEST_DOMAIN}"\
-    "export PGADMIN_DOMAIN=opqa-${BOCRA_DB_SUBDOMAIN}.${TEST_DOMAIN}"\
-    "export PROXY_DOMAIN=opqa-${BOCRA_PROXY_SUBDOMAIN}.${TEST_DOMAIN}"\
-    "export API_DOMAIN=opqa-${BOCRA_API_SUBDOMAIN}.${TEST_DOMAIN}"\
-    "export COMM_DOMAIN=opqa-${BOCRA_COMM_SUBDOMAIN}.${TEST_DOMAIN}"\
-    "export CRON_DOMAIN=opqa-${BOCRA_CRON_SUBDOMAIN}.${TEST_DOMAIN}"\
-    "export WEB_DOMAIN=opqa-web.${TEST_DOMAIN}"\
-    "export KEYCLOAK_DOMAIN=opqa-${BOCRA_KEYCLOAK_SUBDOMAIN}.${TEST_DOMAIN}"\
-    "export REGISTRY_DOMAIN=opqa-${BOCRA_REGISTRY_SUBDOMAIN}.${TEST_DOMAIN}"\
-    "export JENKINS_DOMAIN=opqa-${BOCRA_JENKINS_SUBDOMAIN}.${TEST_DOMAIN}"\
-    "export GRAFANA_DOMAIN=opqa-${BOCRA_GRAFANA_SUBDOMAIN}.${TEST_DOMAIN}"\
-    "export KIBANA_DOMAIN=opqa-${BOCRA_KIBANA_SUBDOMAIN}.${TEST_DOMAIN}"\
-    "export PORTAINER_DOMAIN=opqa-${BOCRA_PORTAINER_SUBDOMAIN}.${TEST_DOMAIN}"\
-    "export PROMETHEUS_DOMAIN=opqa-${BOCRA_PROMETHEUS_SUBDOMAIN}.${TEST_DOMAIN}"\
-    "export RABBITMQ_DOMAIN=opqa-${BOCRA_RABBITMQ_SUBDOMAIN}.${TEST_DOMAIN}"\
-    "export UNSEE_DOMAIN=opqa-unsee.${TEST_DOMAIN}"\
-    "export ALERTMANAGER_DOMAIN=opqa-alertmanager.${TEST_DOMAIN}"\
-    "export REDIRECT_URI=opqa-web.${TEST_DOMAIN}"\
-    "export SMTP_HOST=${TEST_SMTP_HOST}"\
-    "export BOCRA_KEYCLOAK_ADDRESS=${BOCRA_KEYCLOAK_TEST_ADDRESS}"\
-    "export KEYCLOAK_AUTH_URL=${KEYCLOAK_TEST_BASE_URL}"\
-    "export ACME_EMAIL=${TEST_ACME_EMAIL}"\
-    "export WEB_URL=https://opqa-${BOCRA_WEB_SUBDOMAIN}.${TEST_DOMAIN}"\
-    "export API_URL=${TEST_API_URL}"\
-    "export COMM_URL=${TEST_COMM_URL}"\
-    "export CRON_URL=${TEST_CRON_URL}"\
-    "export SSL_SECURE=true"\
-    "export CERT=bocra_org_bw"\
-    "export CERT_PASSWORD=changeit"\
-    "export API_LOG_LEVEL=DEBUG"\
-    "export COMM_LOG_LEVEL=DEBUG"\
-    "export CRON_LOG_LEVEL=DEBUG"\
-    "export IMAGE_VERSION_SUFFIX=-test"\
-    "export VERSION=${VERSION}"\
-    "export REGISTRY_TAG=opqa-${BOCRA_REGISTRY_SUBDOMAIN}.${TEST_DOMAIN}"\
-    "export KEYCLOAK_REGISTRY_IMAGE=${KEYCLOAK_TEST_REGISTRY_IMAGE}"\
-    "export KEYCLOAK_WEB_CLIENT_ID=17b28a77-1d2e-4e91-8a22-ff6db44108e5"\
-    "export POSTGRES_SERVER=${TEST_DB_URL}"\
-    >> .env
-
-LIVE_ENV = printf "%s\n" \
-	"\#!/bin/sh"\
-    ${COMMON_LOCAL_VARS}\
-    "export EDI_DATA=${EDI_DATA}"\
-    "export IMAGE_VERSION=${IMAGE_VERSION}"\
-    "export DOMAIN=${LIVE_DOMAIN}"\
-    "export DB_DOMAIN=op-${BOCRA_DB_SUBDOMAIN}.${LIVE_DOMAIN}"\
-    "export PGADMIN_DOMAIN=op-${BOCRA_PGADMIN_SUBDOMAIN}.${LIVE_DOMAIN}"\
-    "export PROXY_DOMAIN=op-${BOCRA_PROXY_SUBDOMAIN}.${LIVE_DOMAIN}"\
-    "export API_DOMAIN=op-${BOCRA_API_SUBDOMAIN}.${LIVE_DOMAIN}"\
-    "export COMM_DOMAIN=op-${BOCRA_COMM_SUBDOMAIN}.${LIVE_DOMAIN}"\
-    "export WEB_DOMAIN=op-${BOCRA_WEB_SUBDOMAIN}.${LIVE_DOMAIN}"\
-    "export KEYCLOAK_DOMAIN=op-${BOCRA_KEYCLOAK_SUBDOMAIN}.${LIVE_DOMAIN}"\
-    "export REGISTRY_DOMAIN=op-${BOCRA_REGISTRY_SUBDOMAIN}.${LIVE_DOMAIN}"\
-    "export RABBITMQ_DOMAIN=op-${BOCRA_RABBITMQ_SUBDOMAIN}.${LIVE_DOMAIN}"\
-    "export REDIRECT_URI=https://op-web.${LIVE_DOMAIN}"\
-    "export SMTP_HOST=${LIVE_SMTP_HOST}"\
-    "export BOCRA_KEYCLOAK_ADDRESS=${BOCRA_KEYCLOAK_LIVE_ADDRESS}"\
-    "export KEYCLOAK_AUTH_URL=${KEYCLOAK_LIVE_BASE_URL}"\
-    "export ACME_EMAIL=${LIVE_ACME_EMAIL}"\
-    "export WEB_URL=${LIVE_WEB_URL}"\
-    "export API_URL=${LIVE_API_URL}"\
-    "export COMM_URL=${LIVE_COMM_URL}"\
-    "export SSL_SECURE=true"\
-    "export CERT=bocra_org_bw"\
-    "export CERT_PASSWORD=changeit"\
-    "export IMAGE_VERSION_SUFFIX="\
-    "export API_LOG_LEVEL=ERROR"\
-    "export COMM_LOG_LEVEL=ERROR"\
-    "export CRON_LOG_LEVEL=ERROR"\
-    "export REGISTRY_TAG=op-${BOCRA_REGISTRY_SUBDOMAIN}.${LIVE_DOMAIN}"\
-    "export KEYCLOAK_REGISTRY_IMAGE=${KEYCLOAK_LIVE_REGISTRY_IMAGE}"\
-    "export POSTGRES_SERVER=${LIVE_DB_URL}"\
+    "export REGISTRY_TAG=${EDI_REGISTRY_SUBDOMAIN}.${DOMAIN}"\
+    "export KEYCLOAK_REGISTRY_IMAGE=${KEYCLOAK_REGISTRY_IMAGE}"\
+    "export POSTGRES_SERVER=${DB_URL}"\
     >> .env

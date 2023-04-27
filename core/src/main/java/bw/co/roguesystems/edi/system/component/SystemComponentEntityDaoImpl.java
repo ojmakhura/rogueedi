@@ -6,6 +6,7 @@
  */
 package bw.co.roguesystems.edi.system.component;
 
+import bw.co.roguesystems.edi.system.EdiSystem;
 import bw.co.roguesystems.edi.system.EdiSystemEntityRepository;
 import org.springframework.stereotype.Repository;
 
@@ -38,6 +39,16 @@ public class SystemComponentEntityDaoImpl
     {
         // TODO verify behavior of toSystemComponent
         super.toSystemComponent(source, target);
+
+        if(source.getEdiSystemEntity() != null) {
+            EdiSystem sys = new EdiSystem();
+            sys.setId(source.getEdiSystemEntity().getId());
+            sys.setName(source.getEdiSystemEntity().getName());
+            sys.setUrl(source.getEdiSystemEntity().getUrl());
+            // sys.set(source.getEdiSystemEntity().getUrl());
+
+            target.setEdiSystem(sys);
+        }
     }
 
     /**
@@ -57,10 +68,6 @@ public class SystemComponentEntityDaoImpl
      */
     private SystemComponentEntity loadSystemComponentEntityFromSystemComponent(SystemComponent systemComponent)
     {
-        // TODO implement loadSystemComponentEntityFromSystemComponent
-        throw new UnsupportedOperationException("bw.co.roguesystems.edi.system.component.loadSystemComponentEntityFromSystemComponent(SystemComponent) not yet implemented.");
-
-        /* A typical implementation looks like this:
         if (systemComponent.getId() == null)
         {
             return  SystemComponentEntity.Factory.newInstance();
@@ -69,7 +76,6 @@ public class SystemComponentEntityDaoImpl
         {
             return this.load(systemComponent.getId());
         }
-        */
     }
 
     /**
@@ -94,5 +100,9 @@ public class SystemComponentEntityDaoImpl
     {
         // TODO verify behavior of systemComponentToEntity
         super.systemComponentToEntity(source, target, copyIfNull);
+
+        if(source.getEdiSystem() != null && source.getEdiSystem().getId() != null) {
+            target.setEdiSystemEntity(ediSystemEntityRepository.getReferenceById(source.getEdiSystem().getId()));
+        }
     }
 }

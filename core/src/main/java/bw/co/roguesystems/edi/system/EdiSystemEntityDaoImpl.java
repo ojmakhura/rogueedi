@@ -60,10 +60,6 @@ public class EdiSystemEntityDaoImpl
      */
     private EdiSystemEntity loadEdiSystemEntityFromEdiSystem(EdiSystem ediSystem)
     {
-        // TODO implement loadEdiSystemEntityFromEdiSystem
-        throw new UnsupportedOperationException("bw.co.roguesystems.edi.system.loadEdiSystemEntityFromEdiSystem(EdiSystem) not yet implemented.");
-
-        /* A typical implementation looks like this:
         if (ediSystem.getId() == null)
         {
             return  EdiSystemEntity.Factory.newInstance();
@@ -72,7 +68,6 @@ public class EdiSystemEntityDaoImpl
         {
             return this.load(ediSystem.getId());
         }
-        */
     }
 
     /**

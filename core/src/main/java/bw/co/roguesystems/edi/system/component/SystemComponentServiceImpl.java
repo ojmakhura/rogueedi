@@ -9,10 +9,18 @@
 package bw.co.roguesystems.edi.system.component;
 
 import java.util.Collection;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.MessageSource;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import bw.co.roguesystems.edi.RogueediSpecifications;
 
 /**
  * @see bw.co.roguesystems.edi.system.component.SystemComponentService
@@ -42,8 +50,7 @@ public class SystemComponentServiceImpl
     protected SystemComponent handleFindById(Long id)
         throws Exception
     {
-        // TODO implement protected  SystemComponent handleFindById(Long id)
-        throw new UnsupportedOperationException("bw.co.roguesystems.edi.system.component.SystemComponentService.handleFindById(Long id) Not implemented!");
+        return systemComponentEntityDao.toSystemComponent(systemComponentEntityRepository.getReferenceById(id));
     }
 
     /**
@@ -53,8 +60,8 @@ public class SystemComponentServiceImpl
     protected SystemComponent handleSave(SystemComponent systemComponent)
         throws Exception
     {
-        // TODO implement protected  SystemComponent handleSave(SystemComponent systemComponent)
-        throw new UnsupportedOperationException("bw.co.roguesystems.edi.system.component.SystemComponentService.handleSave(SystemComponent systemComponent) Not implemented!");
+        SystemComponentEntity component = systemComponentEntityDao.systemComponentToEntity(systemComponent);
+        return systemComponentEntityDao.toSystemComponent(systemComponentEntityRepository.save(component));
     }
 
     /**
@@ -64,8 +71,8 @@ public class SystemComponentServiceImpl
     protected boolean handleRemove(Long id)
         throws Exception
     {
-        // TODO implement protected  boolean handleRemove(Long id)
-        throw new UnsupportedOperationException("bw.co.roguesystems.edi.system.component.SystemComponentService.handleRemove(Long id) Not implemented!");
+        systemComponentEntityRepository.deleteById(id);
+        return true;
     }
 
     /**
@@ -75,8 +82,7 @@ public class SystemComponentServiceImpl
     protected Collection<SystemComponent> handleGetAll()
         throws Exception
     {
-        // TODO implement protected  Collection<SystemComponent> handleGetAll()
-        throw new UnsupportedOperationException("bw.co.roguesystems.edi.system.component.SystemComponentService.handleGetAll() Not implemented!");
+        return systemComponentEntityDao.toSystemComponentCollection(systemComponentEntityRepository.findAll());
     }
 
     /**
@@ -86,8 +92,16 @@ public class SystemComponentServiceImpl
     protected Collection<SystemComponent> handleSearch(String criteria)
         throws Exception
     {
-        // TODO implement protected  Collection<SystemComponent> handleSearch(String criteria)
-        throw new UnsupportedOperationException("bw.co.roguesystems.edi.system.component.SystemComponentService.handleSearch(String criteria) Not implemented!");
+
+        Specification<SystemComponentEntity> specs = null;
+
+        if(StringUtils.isNotEmpty(criteria)) {
+            specs = RogueediSpecifications.<SystemComponentEntity>findByAttributeContainingIgnoreCase("name", criteria)
+                    .or(RogueediSpecifications.<SystemComponentEntity>findByAttributeContainingIgnoreCase("identifier", criteria));
+        }
+
+        return systemComponentEntityDao.toSystemComponentCollection(systemComponentEntityRepository.findAll(specs, Sort.by("name").ascending()));
+
     }
 
     /**
@@ -97,8 +111,8 @@ public class SystemComponentServiceImpl
     protected Collection<SystemComponent> handleGetAll(Integer pageNumber, Integer pageSize)
         throws Exception
     {
-        // TODO implement protected  Collection<SystemComponent> handleGetAll(Integer pageNumber, Integer pageSize)
-        throw new UnsupportedOperationException("bw.co.roguesystems.edi.system.component.SystemComponentService.handleGetAll(Integer pageNumber, Integer pageSize) Not implemented!");
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+        return systemComponentEntityDao.toSystemComponentCollection(systemComponentEntityRepository.findAll(pageable).getContent());
     }
 
 }
