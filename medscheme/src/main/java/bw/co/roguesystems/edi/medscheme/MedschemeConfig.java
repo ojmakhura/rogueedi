@@ -1,9 +1,12 @@
-package bw.co.roguesystems.edi.afa;
+package bw.co.roguesystems.edi.medscheme;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
-public class AfaConfig {
+@Configuration
+public class MedschemeConfig {
+
     @Bean
     public Jaxb2Marshaller marshaller() {
         Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
@@ -14,9 +17,9 @@ public class AfaConfig {
     }
 
     @Bean
-    public ClaimClient countryClient(Jaxb2Marshaller marshaller) {
-        ClaimClient client = new ClaimClient();
-        client.setDefaultUri("http://172.27.45.11:8080/interpharmswitch/realTimeClaimWS");
+    public MedschemeClient medschemeClient(Jaxb2Marshaller marshaller) {
+        MedschemeClient client = new MedschemeClient();
+        // client.setDefaultUri("http://localhost:8080/ws");
         client.setMarshaller(marshaller);
         client.setUnmarshaller(marshaller);
         return client;

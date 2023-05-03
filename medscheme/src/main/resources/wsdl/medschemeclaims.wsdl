@@ -53,6 +53,7 @@
     <service name="ProcessRealtimeClaimImplService">
         <port binding="tns:ProcessRealtimeClaimImplBinding" name="ProcessRealtimeClaimImplPort">
             <soap:address location="http://172.27.45.11:8080/interpharmswitch/realTimeClaimWS"/>
+            <!-- <soap:address location="http://172.27.174.46:8080/interpharmswitch/realTimeClaimWS"/> -->
         </port>
     </service>
 </definitions>

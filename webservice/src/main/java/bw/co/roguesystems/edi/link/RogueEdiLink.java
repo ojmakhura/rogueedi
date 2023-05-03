@@ -22,6 +22,7 @@ public class RogueEdiLink {
     public ResponseEntity<?> afaLink(@RequestBody ClaimRequest claim) {
 
         for(ClaimType c : claim.getClaim()) {
+            
         }
 
         return ResponseEntity.ok().build();
