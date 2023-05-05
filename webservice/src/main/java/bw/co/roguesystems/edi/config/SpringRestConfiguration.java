@@ -1,4 +1,4 @@
-package bw.co.roguesystems.edi;
+package bw.co.roguesystems.edi.config;
 
 import java.util.Collections;
 import org.springframework.context.annotation.Bean;
