@@ -140,7 +140,6 @@
                 <property name="open-session-in-view">${core.manual.java.dir}</property>
                 <property name="client-config">${core.manual.test.dir}</property>
                 <property name="client">${core.manual.java.dir}</property>
-                <property name="client-test">${core.manual.test.dir}</property>
                 <property name="osgi">${core.generated.dir}</property-->
                 <property name="daos">${core.generated.dir}</property>
                 <property name="dao-impls">${core.manual.java.dir}</property>
@@ -155,6 +154,7 @@
                 <property name="criteria">${common.generated.dir}</property>
                 <property name="value-objects">${common.generated.dir}</property>
                 <property name="springSpecifications">${application.package}.RogueediSpecifications</property>
+                <property name="client-test">${core.manual.test.dir}</property>
             </properties>
         </namespace>
         <!-- See http://docs.andromda.org/andromda-cartridges/andromda-hibernate-cartridge/namespace.html -->
@@ -184,7 +184,7 @@
                 <property name="ejbInterfacePattern">{0}.ejb.{1}</property>
                 <property name="ejbHomeInterfacePattern">{0}.ejb.{1}Home</property>
                 <property name="springVersion">5.2.4.RELEASE</property>
-                                                <property name="webservice-types">${webservice.generated.dir}</property>
+                <property name="webservice-types">${webservice.generated.dir}</property>
                 <property name="configuration">${webservice.generated.dir}</property>
                 <property name="webservice-project">${webservice.project}</property>
                 <property name="webservice-impl">${webservice.manual.java.dir}</property>
