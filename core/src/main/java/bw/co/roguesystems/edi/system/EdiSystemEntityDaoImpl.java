@@ -60,6 +60,7 @@ public class EdiSystemEntityDaoImpl
      */
     private EdiSystemEntity loadEdiSystemEntityFromEdiSystem(EdiSystem ediSystem)
     {
+        System.out.println(ediSystem);
         if (ediSystem.getId() == null)
         {
             return  EdiSystemEntity.Factory.newInstance();

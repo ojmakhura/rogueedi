@@ -53,8 +53,17 @@ public class EdiSystemServiceImpl
     protected EdiSystem handleSave(EdiSystem ediSystem)
         throws Exception
     {
+
+        System.out.println("---------------------------------");
+
+        EdiSystemEntity entity = getEdiSystemEntityDao().ediSystemToEntity(ediSystem);
+        System.out.println("--");
+        entity = getEdiSystemEntityRepository().save(entity);
+        System.out.println("::");
+
+        return getEdiSystemEntityDao().toEdiSystem(entity);
         // TODO implement protected  EdiSystem handleSave(EdiSystem ediSystem)
-        throw new UnsupportedOperationException("bw.co.roguesystems.edi.system.EdiSystemService.handleSave(EdiSystem ediSystem) Not implemented!");
+        // throw new UnsupportedOperationException("bw.co.roguesystems.edi.system.EdiSystemService.handleSave(EdiSystem ediSystem) Not implemented!");
     }
 
     /**

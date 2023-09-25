@@ -100,6 +100,7 @@ public class EdiClientFEControllerImpl
      */
     @Override
     public void doSave(DoSaveForm form, Model model) {
+        System.out.println("doSave");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         // populating value with dummy instance

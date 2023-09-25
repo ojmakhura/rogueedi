@@ -41,8 +41,6 @@ public class EdiSystemControllerImpl
         ediSystem.setName(null);
         ediSystem.setUrl(null);
         ediSystem.setDescription(null);
-        ediSystem.setId(3355l);
-        ediSystem.setEdiClient(null);
         ediSystem.setSystemComponents(null);
         form.setEdiSystem(ediSystem);
     }
@@ -53,6 +51,7 @@ public class EdiSystemControllerImpl
     @Override
     public void doDelete(DoDeleteForm form, Model model)
     {
+        System.out.println("doDelete " + form.getEdiSystem());
         // populating value with dummy instance
         EdiSystem ediSystem = new EdiSystem();
         ediSystem.setCreatedBy(null);
@@ -62,7 +61,6 @@ public class EdiSystemControllerImpl
         ediSystem.setName(null);
         ediSystem.setUrl(null);
         ediSystem.setDescription(null);
-        ediSystem.setId(3355l);
         ediSystem.setEdiClient(null);
         ediSystem.setSystemComponents(null);
         form.setEdiSystem(ediSystem);
@@ -74,19 +72,17 @@ public class EdiSystemControllerImpl
     @Override
     public void doSave(DoSaveForm form, Model model)
     {
-        // populating value with dummy instance
-        EdiSystem ediSystem = new EdiSystem();
-        ediSystem.setCreatedBy(null);
-        ediSystem.setUpdatedBy(null);
-        ediSystem.setCreatedDate(null);
-        ediSystem.setUpdatedDate(null);
-        ediSystem.setName(null);
-        ediSystem.setUrl(null);
-        ediSystem.setDescription(null);
-        ediSystem.setId(3355l);
-        ediSystem.setEdiClient(null);
-        ediSystem.setSystemComponents(null);
-        form.setEdiSystem(ediSystem);
+        System.out.println("doSave");
+
+        try {
+            EdiSystem ediSystem = ediSystemService.save(form.getEdiSystem());
+            form.setEdiSystem(ediSystem);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+
+        
     }
 
     /**
